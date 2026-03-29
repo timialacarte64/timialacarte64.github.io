@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHIMIZU | Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Noto+Serif+JP:wght@300;400&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --warm-white: #FAF7F2;
+    --ink: #1C1A17;
+    --muted-brown: #7A6A58;
+    --soft-sage: #8A9E8C;
+    --accent: #C4956A;
+    --accent-light: #E8D5BC;
+    --border: rgba(28, 26, 23, 0.12);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 300;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(245, 240, 232, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  nav { display: flex; gap: 2.5rem; }
+  nav a {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    color: var(--muted-brown);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  nav a:hover { color: var(--ink); }
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 0 6rem;
+    gap: 4rem;
+    opacity: 0;
+    animation: fadeUp 1.2s ease forwards 0.3s;
+  }
+  .hero-text { padding-top: 6rem; }
+  .hero-eyebrow {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    color: var(--soft-sage);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 2rem;
+    height: 1px;
+    background: var(--soft-sage);
+    display: inline-block;
+  }
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.3rem;
+  }
+  h1 em { font-style: italic; color: var(--accent); }
+  .hero-subtitle {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.88rem;
+    color: var(--muted-brown);
+    margin-top: 1.5rem;
+    margin-bottom: 2.5rem;
+    line-height: 2;
+    max-width: 360px;
+  }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 3rem; }
+  .tag {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    padding: 0.35rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--muted-brown);
+    background: transparent;
+    transition: all 0.3s;
+  }
+  .tag:hover { background: var(--accent-light); border-color: var(--accent); color: var(--ink); }
+  .hero-visual { display: flex; justify-content: center; align-items: center; }
+  .hero-frame {
+    width: 340px; height: 420px;
+    border: 1px solid var(--border);
+    position: relative;
+    background: var(--warm-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .hero-frame::before {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    border: 1px solid var(--accent-light);
+    z-index: 1;
+    pointer-events: none;
+  }
+  .hero-frame-inner { text-align: center; z-index: 2; padding: 2rem; }
+  .big-kanji {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 6rem;
+    font-weight: 300;
+    color: var(--accent-light);
+    line-height: 1;
+    display: block;
+    margin-bottom: 1rem;
+    animation: float 4s ease-in-out infinite;
+  }
+  .frame-caption {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--muted-brown);
+    letter-spacing: 0.08em;
+  }
+  .frame-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; margin: 1rem auto; }
+  .section-divider {
+    display: flex; align-items: center; gap: 1.5rem;
+    padding: 0 6rem; margin: 1rem 0;
+  }
+  .section-divider span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.7rem; letter-spacing: 0.3em;
+    color: var(--muted-brown); text-transform: uppercase; white-space: nowrap;
+  }
+  .section-divider::before, .section-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+  .about {
+    padding: 5rem 6rem;
+    display: grid; grid-template-columns: 1fr 2fr; gap: 5rem; align-items: start;
+    opacity: 0; animation: fadeUp 1s ease forwards; animation-play-state: paused;
+  }
+  .about.visible { animation-play-state: running; }
+  .section-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.7rem; letter-spacing: 0.3em; color: var(--soft-sage);
+    text-transform: uppercase; writing-mode: vertical-rl; padding-top: 0.5rem;
+  }
+  .about-content h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; font-weight: 300; line-height: 1.3; margin-bottom: 1.5rem;
+  }
+  .about-content p { font-size: 0.85rem; color: var(--muted-brown); max-width: 540px; margin-bottom: 1rem; line-height: 2.1; }
+  .skills-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: var(--border); margin-top: 2.5rem; border: 1px solid var(--border);
+  }
+  .skill-item { background: var(--cream); padding: 1.2rem 1.5rem; transition: background 0.3s; }
+  .skill-item:hover { background: var(--warm-white); }
+  .skill-name { font-family: 'Noto Sans JP', sans-serif; font-size: 0.7rem; letter-spacing: 0.1em; color: var(--ink); margin-bottom: 0.4rem; }
+  .skill-desc { font-size: 0.72rem; color: var(--muted-brown); line-height: 1.6; }
+  .works {
+    padding: 4rem 6rem 5rem;
+    opacity: 0; animation: fadeUp 1s ease forwards; animation-play-state: paused;
+  }
+  .works.visible { animation-play-state: running; }
+  .works-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3rem; }
+  .works-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; letter-spacing: 0.05em; }
+  .works-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .work-card {
+    border: 1px solid var(--border); background: var(--warm-white);
+    padding: 2rem; position: relative;
+    transition: transform 0.3s, box-shadow 0.3s; overflow: hidden;
+  }
+  .work-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px; background: linear-gradient(90deg, var(--accent), var(--soft-sage));
+    transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
+  }
+  .work-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(28,26,23,0.08); }
+  .work-card:hover::after { transform: scaleX(1); }
+  .work-icon { font-size: 2rem; margin-bottom: 1.2rem; display: block; }
+  .work-type { font-family: 'Noto Sans JP', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; color: var(--soft-sage); text-transform: uppercase; margin-bottom: 0.6rem; }
+  .work-title { font-family: 'Noto Serif JP', serif; font-size: 1rem; font-weight: 400; margin-bottom: 0.8rem; line-height: 1.5; }
+  .work-desc { font-family: 'Noto Sans JP', sans-serif; font-size: 0.72rem; color: var(--muted-brown); line-height: 1.9; }
+  .contact {
+    padding: 5rem 6rem; text-align: center;
+    background: var(--warm-white); border-top: 1px solid var(--border);
+    opacity: 0; animation: fadeUp 1s ease forwards; animation-play-state: paused;
+  }
+  .contact.visible { animation-play-state: running; }
+  .contact h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 300; font-style: italic; margin-bottom: 1rem; }
+  .contact p { font-size: 0.82rem; color: var(--muted-brown); margin-bottom: 2.5rem; line-height: 2; }
+  .contact-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+  .contact-btn {
+    font-family: 'Noto Sans JP', sans-serif; font-size: 0.72rem; letter-spacing: 0.12em;
+    padding: 0.9rem 2.2rem; border: 1px solid var(--ink); color: var(--ink);
+    text-decoration: none; transition: all 0.3s; display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .contact-btn:hover { background: var(--ink); color: var(--cream); }
+  .contact-btn.primary { background: var(--ink); color: var(--cream); }
+  .contact-btn.primary:hover { background: var(--accent); border-color: var(--accent); }
+  footer {
+    padding: 2rem 6rem; display: flex;
+    justify-content: space-between; align-items: center; border-top: 1px solid var(--border);
+  }
+  footer p { font-family: 'Noto Sans JP', sans-serif; font-size: 0.65rem; color: var(--muted-brown); letter-spacing: 0.08em; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+  @media (max-width: 900px) {
+    header { padding: 1rem 1.5rem; }
+    nav { gap: 1.5rem; }
+    .hero { grid-template-columns: 1fr; padding: 6rem 2rem 3rem; }
+    .hero-visual { display: none; }
+    .about, .works, .contact { padding: 3rem 2rem; }
+    .about { grid-template-columns: 1fr; gap: 1rem; }
+    .section-label { writing-mode: horizontal-tb; }
+    .works-grid { grid-template-columns: 1fr; }
+    .section-divider { padding: 0 2rem; }
+    footer { padding: 1.5rem 2rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="#" class="logo">SHIMIZU</a>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#works">Works</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <p class="hero-eyebrow">Freelance Writer &amp; Creator</p>
+    <h1>Words &amp;<br><em>Code</em>,<br>Woven.</h1>
+    <p class="hero-subtitle">三重県伊勢市を拠点に、SEOライティング・AIツール活用・アプリ開発・創作小説まで、言葉とテクノロジーを横断するフリーランスクリエイター。</p>
+    <div class="hero-tags">
+      <span class="tag">SEO Writing</span>
+      <span class="tag">AI × Content</span>
+      <span class="tag">App Development</span>
+      <span class="tag">Creative Writing</span>
+      <span class="tag">Mie, Japan</span>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-frame">
+      <div class="hero-frame-inner">
+        <span class="big-kanji">詞</span>
+        <div class="frame-dot"></div>
+        <p class="frame-caption">言葉を、紡ぐ人。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"><span>About</span></div>
+
+<section class="about" id="about">
+  <span class="section-label">Profile</span>
+  <div class="about-content">
+    <h2>書くことと、<br>つくることの間で。</h2>
+    <p>三重県伊勢市を拠点に活動するフリーランスのSEOライター・エディター。婚礼メディア「DRESSY by プラコレ」での三重県ローカルコンテンツ制作をはじめ、AIツールを活用した効率的なコンテンツ制作が得意です。</p>
+    <p>noteでの創作活動（フォロワー420名以上）や、Tales掲載のショートストーリーシリーズ「魔法使いの助手」の執筆も並行しながら、テクノロジーと文学の交差点を探求しています。</p>
+    <div class="skills-grid">
+      <div class="skill-item">
+        <p class="skill-name">✍️ SEO Copywriting</p>
+        <p class="skill-desc">PREP法・一文一義を意識した検索流入重視の記事制作</p>
+      </div>
+      <div class="skill-item">
+        <p class="skill-name">🤖 AI Tool Integration</p>
+        <p class="skill-desc">Claude / ChatGPT等を活用した制作フロー構築</p>
+      </div>
+      <div class="skill-item">
+        <p class="skill-name">💻 App Development</p>
+        <p class="skill-desc">React / HTML / CSS による Webアプリ設計・実装</p>
+      </div>
+      <div class="skill-item">
+        <p class="skill-name">📖 Creative Writing</p>
+        <p class="skill-desc">ファンタジー小説・ショートストーリーの企画・執筆</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"><span>Works</span></div>
+
+<section class="works" id="works">
+  <div class="works-header"><h2>Selected Works</h2></div>
+  <div class="works-grid">
+    <div class="work-card">
+      <span class="work-icon">🍽️</span>
+      <p class="work-type">App Development</p>
+      <p class="work-title">Kitchen Compass</p>
+      <p class="work-desc">Claude API統合・メンバープロフィール機能・SNSシェア対応の献立管理Webアプリ。</p>
+    </div>
+    <div class="work-card">
+      <span class="work-icon">🦝</span>
+      <p class="work-type">Creative Writing</p>
+      <p class="work-title">魔法使いの助手</p>
+      <p class="work-desc">タヌキの「ぽん太」と不機嫌な魔法使いが織りなすショートストーリーシリーズ。Tales（note Inc.）にて連載中。</p>
+    </div>
+    <div class="work-card">
+      <span class="work-icon">📚</span>
+      <p class="work-type">Novel Series</p>
+      <p class="work-title">忘れられた図書館の物語</p>
+      <p class="work-desc">リボンを持つ童話キャラクターたちが神秘の図書館に集う日本語ファンタジー小説シリーズ。</p>
+    </div>
+    <div class="work-card">
+      <span class="work-icon">💍</span>
+      <p class="work-type">SEO Content</p>
+      <p class="work-title">DRESSY by プラコレ</p>
+      <p class="work-desc">三重県のカフェ・神社・お土産・イルミネーションなどローカル情報を中心にSEO記事を多数執筆・編集。</p>
+    </div>
+    <div class="work-card">
+      <span class="work-icon">✏️</span>
+      <p class="work-type">note / Blog</p>
+      <p class="work-title">フライドポテト（note）</p>
+      <p class="work-desc">AIと創作の交差点をテーマにnoteで発信中。フォロワー420名以上を達成。</p>
+    </div>
+    <div class="work-card">
+      <span class="work-icon">🎨</span>
+      <p class="work-type">App Development</p>
+      <p class="work-title">漢字筆順アニメアプリ</p>
+      <p class="work-desc">YouTube Shortsコンテンツ向けの漢字筆順アニメーション生成アプリ。Sora連携の動画制作ワークフローも設計。</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"><span>Contact</span></div>
+
+<section class="contact" id="contact">
+  <h2>Let's Connect.</h2>
+  <p>お仕事のご依頼・コラボレーションのご相談など、<br>お気軽にご連絡ください。</p>
+  <div class="contact-links">
+    <a href="https://note.com/" target="_blank" class="contact-btn primary">📝 note を見る</a>
+    <a href="mailto:your@email.com" class="contact-btn">✉️ メールを送る</a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 SHIMIZU. All rights reserved.</p>
+  <p>Ise, Mie, Japan</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.about, .works, .contact').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
